@@ -5,24 +5,24 @@ import CoinFace from "./CoinFace";
 import { useGame } from "./GameMaster";
 const SingleCoin = (props) => {
   const meshRef = useRef<Mesh>(null);
-  let { targetFace, clock } = useGame();
+  let { targetFace, clock, isAnimating, setIsAnimating } = useGame();
 
   //rot.z === 0 = queen rot.z === Math.PI = lincoln
   //rot.z < 0-0.1 && rot.z > 0+0.1
   useFrame((state, delta) => {
-    console.log("clock: ", clock);
-    
     let zRot = meshRef.current?.rotation.z;
-    if (typeof targetFace === "number") {
-      clock = state.clock.elapsedTime;
-      if (clock > 5) {
+    if (isAnimating) {
+      zRot = 0;
+      state.clock.elapsedTime = 0;
+      setIsAnimating(false);
+    } else if (typeof targetFace === "number") {
+      if (state.clock.elapsedTime > 5) {
         if (zRot > targetFace - 0.1 && zRot < targetFace + 0.1) {
           zRot = targetFace;
           return;
-        } else meshRef.current?.rotateZ(0.1 / clock);
+        } else meshRef.current?.rotateZ(0.1 / state.clock.elapsedTime);
       } else {
-        clock = state.clock.elapsedTime;
-        meshRef.current?.rotateZ(0.1 / clock);
+        meshRef.current?.rotateZ(0.1 / state.clock.elapsedTime);
       }
     } else {
       meshRef.current?.rotateZ(0.01);
