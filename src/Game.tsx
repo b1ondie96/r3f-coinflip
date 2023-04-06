@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import SingleCoin from "./SingleCoin";
-import cryptojs from "crypto-js";
 import { useGame } from "./GameMaster";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
@@ -12,7 +11,6 @@ const CameraController = () => {
   useEffect(() => {
     controls.minDistance = 3;
     controls.maxDistance = 20;
-
     return () => {
       controls.reset();
       controls.dispose();
@@ -32,7 +30,6 @@ const Game = () => {
         }}
       >
         {cameraControl && <CameraController />}
-
         <SingleCoin position={[0, 0, -1]} />
       </Canvas>
     </>

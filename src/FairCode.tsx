@@ -7,7 +7,6 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
-
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
 import { agate } from "react-syntax-highlighter/dist/esm/styles/hljs";

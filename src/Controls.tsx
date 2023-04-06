@@ -1,4 +1,3 @@
-import React from "react";
 import { useGame } from "./GameMaster";
 import ProvablyFair from "./ProvablyFair";
 import {
@@ -29,7 +28,6 @@ const Controls = () => {
         variant="outline"
         focusBorderColor="teal.500"
       />
-
       <Button
         colorScheme={"teal"}
         isDisabled={disabled}

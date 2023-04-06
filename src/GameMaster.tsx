@@ -1,4 +1,4 @@
-import React, {
+import {
   createContext,
   ReactNode,
   useContext,
@@ -25,19 +25,19 @@ export function GameContextProvider({ children }: { children: ReactNode }) {
     [coinsFlipped]
   );
 
-const randomNumber = () => {
+  const randomNumber = () => {
     const hmac = cryptojs.HmacSHA256(
-    clientSeed + serverSeed.current.toString(),
-    "fairynuff"
+      clientSeed + serverSeed.current.toString(),
+      "fairynuff"
     );
     const provablyFairNumber = hmac.words.reduce((result, value, i) => {
-    const divider = 1 ** (i + 1);
-    const partialResult = value / divider;
-    return result + partialResult;
-}, 0);
+      const divider = 1 ** (i + 1);
+      const partialResult = value / divider;
+      return result + partialResult;
+    }, 0);
 
-return provablyFairNumber;
-};
+    return provablyFairNumber;
+  };
   function flipCoin() {
     setDisabled(true);
     const number = randomNumber();

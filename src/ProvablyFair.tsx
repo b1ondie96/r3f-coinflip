@@ -1,17 +1,14 @@
-import React from "react";
 import { useGame } from "./GameMaster";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  PopoverHeader,
   PopoverBody,
-  PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
 } from "@chakra-ui/react";
 import { RiShieldCheckLine } from "react-icons/ri";
+
 const ProvablyFair = () => {
   const { hashedServerSeed, prevServerSeed, coinsFlipped } = useGame();
   return (
