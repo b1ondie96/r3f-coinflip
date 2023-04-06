@@ -10,11 +10,8 @@ import { useEffect } from "react";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
 import { agate } from "react-syntax-highlighter/dist/esm/styles/hljs";
-
+SyntaxHighlighter.registerLanguage("javascript", js);
 const FairCode = () => {
-  useEffect(() => {
-    SyntaxHighlighter.registerLanguage("javascript", js);
-  }, []);
   return (
     <Accordion allowToggle>
       <AccordionItem color={"white"}>

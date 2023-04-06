@@ -20,6 +20,8 @@ const Controls = () => {
     <>
       <Input
         value={clientSeed}
+        isDisabled={disabled}
+        disabled={disabled}
         onChange={(e) => setClientSeed(e.currentTarget.value)}
         id="seed"
         className="font-semibold text-white"
@@ -31,6 +33,7 @@ const Controls = () => {
       <Button
         colorScheme={"teal"}
         isDisabled={disabled}
+        disabled={disabled}
         onClick={() => flipCoin()}
       >
         Flip it
@@ -47,6 +50,7 @@ const Controls = () => {
           colorScheme={"teal"}
           id="camera-control"
           isDisabled={disabled}
+          disabled={disabled}
           value={cameraControl}
           onChange={() => setCameraControl(!cameraControl)}
         />
