@@ -14,41 +14,46 @@ export function GameContextProvider({ children }: { children: ReactNode }) {
   const [coinsFlipped, setCoinsFlipped] = useState(0);
   const [prevServerSeed, setPrevServerSeed] = useState("");
   const [rotateSpeed, setRotateSpeed] = useState(0);
-  const targetFace = useRef(undefined);
-  const clockRef = useRef(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const [cameraControl, setCameraControl] = useState(false);
+  const spinTime = useRef(4);
+  const targetFace = useRef<number | undefined>(undefined);
   const serverSeed = useRef(cryptojs.lib.WordArray.random(16));
   const hashedServerSeed = useMemo(
     () => cryptojs.HmacSHA256(serverSeed.current.toString(), "fairynuff"),
     [coinsFlipped]
   );
 
-  const randomNumber = () => {
+const randomNumber = () => {
     const hmac = cryptojs.HmacSHA256(
-      clientSeed + serverSeed.current.toString(),
-      "fairynuff"
+    clientSeed + serverSeed.current.toString(),
+    "fairynuff"
     );
     const provablyFairNumber = hmac.words.reduce((result, value, i) => {
-      const divider = 1 ** (i + 1);
-      const partialResult = value / divider;
-      return result + partialResult;
-    }, 0);
+    const divider = 1 ** (i + 1);
+    const partialResult = value / divider;
+    return result + partialResult;
+}, 0);
 
-    return provablyFairNumber;
-  };
+return provablyFairNumber;
+};
   function flipCoin() {
-    clockRef.current = 0;
+    setDisabled(true);
     const number = randomNumber();
-    console.log(Math.abs(number % 2) ? Math.PI : 0);
+    setIsAnimating(true);
+    spinTime.current = Math.random() * 7;
     targetFace.current = Math.abs(number % 2) ? Math.PI : 0;
     setRotateSpeed(Math.random() / 3);
     setPrevServerSeed(serverSeed.current.toString());
     setCoinsFlipped((p) => p + 1);
     serverSeed.current = cryptojs.lib.WordArray.random(16);
   }
-  console.log(clockRef.current);
+
   return (
     <GameContext.Provider
       value={{
+        setCoinsFlipped: setCoinsFlipped,
         prevServerSeed: prevServerSeed,
         hashedServerSeed: hashedServerSeed.toString(),
         serverSeed: serverSeed.current.toString(),
@@ -56,7 +61,14 @@ export function GameContextProvider({ children }: { children: ReactNode }) {
         coinsFlipped: coinsFlipped,
         rotateSpeed: rotateSpeed,
         targetFace: targetFace.current,
-        clock: clockRef.current,
+        setIsAnimating: setIsAnimating,
+        isAnimating: isAnimating,
+        spinTime: spinTime.current,
+        setDisabled: setDisabled,
+        disabled: disabled,
+        setCameraControl: setCameraControl,
+        cameraControl: cameraControl,
+        setClientSeed: setClientSeed,
       }}
     >
       {children}

@@ -8,3 +8,6 @@ export interface CoinFaceProps {
   image: string;
   isHeads?: boolean;
 }
+export interface SingleCoinProps {
+  position: [number, number, number];
+}
